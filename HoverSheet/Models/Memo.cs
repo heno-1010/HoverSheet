@@ -2,7 +2,7 @@
 
 namespace HoverSheet.Models
 {
-    internal class Memo
+    public class Memo
     {
         public Guid Id { get; set; }
         public string Content { get; set; }

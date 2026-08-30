@@ -1,15 +1,17 @@
 ﻿using Avalonia.Controls;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
+using System.Linq;
 
 namespace HoverSheet.Models
 {
-    internal class MemoCollection
+    public class MemoCollection
     {
-        public List<Memo> Memos { get; set; } = new List<Memo>();
+        public ObservableCollection<Memo> Memos { get; set; } = new ObservableCollection<Memo>();
 
-        public void AddMemo(string content)
+        public Memo AddMemo(string content)
         {
             var memo = new Memo
             {
@@ -17,10 +19,11 @@ namespace HoverSheet.Models
                 Content = content
             };
             Memos.Add(memo);
+            return memo;
         }
         public void RemoveMemo(Guid id)
         {
-            var memo = Memos.Find(m => m.Id == id);
+            var memo = Memos.FirstOrDefault(m => m.Id == id);
             if (memo != null)
             {
                 Memos.Remove(memo);
@@ -28,11 +31,11 @@ namespace HoverSheet.Models
         }
         public Memo? GetMemo(Guid id)
         {
-            return Memos.Find(m => m.Id == id);
+            return Memos.FirstOrDefault(m => m.Id == id);
         }
         public void UpdateMemo(Guid id, string newContent)
         {
-            var memo = Memos.Find(m => m.Id == id);
+            var memo = Memos.FirstOrDefault(m => m.Id == id);
             if (memo != null)
             {
                 memo.Content = newContent;
