@@ -1,8 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using HoverSheet.Models;
-using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using HoverSheet.Models;
+using System;
 using System.IO;
+using System.Windows.Input;
 
 namespace HoverSheet.ViewModels
 {
@@ -15,6 +16,7 @@ namespace HoverSheet.ViewModels
         public MainWindowViewModel()
         {
             AddMemoCommand = new RelayCommand(AddMemo);
+            LoadMemos();
         }
         private void AddMemo()
         {
@@ -24,6 +26,21 @@ namespace HoverSheet.ViewModels
             string filePath = Path.Combine(folderPath, $"{memo.Id}.txt");
 
             File.Create(filePath).Dispose();
+        }
+        private void LoadMemos()
+        {
+            string folderPath = @"E:\HoverSheet";
+
+            foreach (var filePath in Directory.GetFiles(folderPath, "*.txt"))
+            {
+                var memo = new Memo
+                {
+                    Id = Guid.Parse(Path.GetFileNameWithoutExtension(filePath)),
+                    Content = Path.GetFileName(filePath)
+                };
+
+                MemoCollection.Memos.Add(memo);
+            }
         }
     }
 }
