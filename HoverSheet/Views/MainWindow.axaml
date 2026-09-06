@@ -19,7 +19,7 @@
 			<ColumnDefinition Width="Auto" />
 		</Grid.ColumnDefinitions>
 	
-		<TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AcceptsReturn="True" Grid.Column="0" TextWrapping="Wrap" FontSize="14"/>
+		<TextBox Text="{Binding MemoContent, Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AcceptsReturn="True" Grid.Column="0" TextWrapping="Wrap" FontSize="14"/>
 		
 		<Border Width="250" HorizontalAlignment="Right" Background="#252525" IsVisible="{Binding IsPanelOpen}" PointerExited="PanelExited">
 			<ScrollViewer>
@@ -35,7 +35,7 @@
 							<Button Content="+" Grid.Column="0" HorizontalAlignment="Right" Command="{Binding AddMemoCommand}"/>		
 						</Grid>
 						
-						<ListBox ItemsSource="{Binding MemoCollection.Memos}" Grid.Row="1">
+						<ListBox ItemsSource="{Binding MemoCollection.Memos}" Grid.Row="1" SelectedItem="{Binding SelectedMemo}">
 							<ListBox.ItemTemplate>
 								<DataTemplate>
 									<TextBlock Text="{Binding Content}" FontSize="14" Margin="0,0,0,5"/>

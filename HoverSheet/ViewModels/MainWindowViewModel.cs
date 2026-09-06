@@ -9,9 +9,27 @@ namespace HoverSheet.ViewModels
 {
     public partial class MainWindowViewModel : ViewModelBase
     {
-        [ObservableProperty] private bool isPanelOpen;
+        [ObservableProperty] 
+        private bool isPanelOpen;
+
         public MemoCollection MemoCollection { get; } = new();
         public ICommand AddMemoCommand { get; }
+
+        private Memo? _selectedMemo;
+        public Memo? SelectedMemo
+        {
+            get => _selectedMemo;
+            set
+            {
+                if(SetProperty(ref _selectedMemo, value))
+                {
+                    LoadMemoContent();
+                }
+            }
+        }
+
+        [ObservableProperty]
+        private string _memoContent = "";
 
         public MainWindowViewModel()
         {
@@ -41,6 +59,20 @@ namespace HoverSheet.ViewModels
 
                 MemoCollection.Memos.Add(memo);
             }
+        }
+        private void LoadMemoContent()
+        {
+            string folderPath = @"E:\HoverSheet";
+            if(_selectedMemo == null)
+            {
+                _memoContent = "";
+                OnPropertyChanged("MemoContent");
+                return;
+            }
+
+            string filePath = Path.Combine(folderPath, $"{_selectedMemo.Id}.txt");
+            _memoContent = File.ReadAllText(filePath);
+            OnPropertyChanged("MemoContent");
         }
     }
 }
