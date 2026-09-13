@@ -40,10 +40,10 @@ namespace HoverSheet.ViewModels
         }
         private void AddMemo()
         {
-            var memo = MemoCollection.AddMemo("New Memo");
+            var memo = MemoCollection.AddMemo("");
 
             string filePath = Path.Combine(_folderPath, $"{memo.Id}.txt");
-
+            memo.Content = Path.GetFileName(filePath);
             File.Create(filePath).Dispose();
         }
         private void LoadMemos()
