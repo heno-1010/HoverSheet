@@ -74,5 +74,12 @@ namespace HoverSheet.ViewModels
             _memoContent = File.ReadAllText(filePath);
             OnPropertyChanged("MemoContent");
         }
+        partial void OnMemoContentChanged(string value)
+        {
+            string folderPath = @"E:\HoverSheet";
+            string filePath = Path.Combine(folderPath, $"{_selectedMemo.Id}.txt");
+            File.WriteAllText(filePath, value);
+            OnPropertyChanged("MemoContent");
+        }
     }
 }
