@@ -31,6 +31,8 @@ namespace HoverSheet.ViewModels
         [ObservableProperty]
         private string _memoContent = "";
 
+        private string _folderPath = @"E:\HoverSheet";
+
         public MainWindowViewModel()
         {
             AddMemoCommand = new RelayCommand(AddMemo);
@@ -40,16 +42,13 @@ namespace HoverSheet.ViewModels
         {
             var memo = MemoCollection.AddMemo("New Memo");
 
-            string folderPath = @"E:\HoverSheet";
-            string filePath = Path.Combine(folderPath, $"{memo.Id}.txt");
+            string filePath = Path.Combine(_folderPath, $"{memo.Id}.txt");
 
             File.Create(filePath).Dispose();
         }
         private void LoadMemos()
         {
-            string folderPath = @"E:\HoverSheet";
-
-            foreach (var filePath in Directory.GetFiles(folderPath, "*.txt"))
+            foreach (var filePath in Directory.GetFiles(_folderPath, "*.txt"))
             {
                 var memo = new Memo
                 {
@@ -62,7 +61,6 @@ namespace HoverSheet.ViewModels
         }
         private void LoadMemoContent()
         {
-            string folderPath = @"E:\HoverSheet";
             if(_selectedMemo == null)
             {
                 _memoContent = "";
@@ -70,16 +68,14 @@ namespace HoverSheet.ViewModels
                 return;
             }
 
-            string filePath = Path.Combine(folderPath, $"{_selectedMemo.Id}.txt");
+            string filePath = Path.Combine(_folderPath, $"{_selectedMemo.Id}.txt");
             _memoContent = File.ReadAllText(filePath);
             OnPropertyChanged("MemoContent");
         }
         partial void OnMemoContentChanged(string value)
         {
-            string folderPath = @"E:\HoverSheet";
-            string filePath = Path.Combine(folderPath, $"{_selectedMemo.Id}.txt");
+            string filePath = Path.Combine(_folderPath, $"{_selectedMemo.Id}.txt");
             File.WriteAllText(filePath, value);
-            OnPropertyChanged("MemoContent");
         }
     }
 }
