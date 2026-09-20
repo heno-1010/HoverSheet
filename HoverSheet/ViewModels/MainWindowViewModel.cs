@@ -14,6 +14,7 @@ namespace HoverSheet.ViewModels
 
         public MemoCollection MemoCollection { get; } = new();
         public ICommand AddMemoCommand { get; }
+        public ICommand DeleteMemoCommand { get; }
 
         private Memo? _selectedMemo;
         public Memo? SelectedMemo
@@ -36,6 +37,7 @@ namespace HoverSheet.ViewModels
         public MainWindowViewModel()
         {
             AddMemoCommand = new RelayCommand(AddMemo);
+            DeleteMemoCommand = new RelayCommand(DeleteMemo);
             LoadMemos();
         }
         private void AddMemo()
@@ -76,6 +78,14 @@ namespace HoverSheet.ViewModels
         {
             string filePath = Path.Combine(_folderPath, $"{_selectedMemo.Id}.txt");
             File.WriteAllText(filePath, value);
+        }
+        private void DeleteMemo()
+        {
+            if(_selectedMemo != null)
+            {
+                File.Delete(Path.Combine(_folderPath, $"{_selectedMemo.Id}.txt"));
+                MemoCollection.RemoveMemo(_selectedMemo.Id);
+            }
         }
     }
 }

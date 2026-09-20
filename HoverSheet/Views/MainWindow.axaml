@@ -32,7 +32,8 @@
 
 						<Grid Grid.Row="0">
 							<TextBlock Text="HoverSheet" FontSize="20" FontWeight="Bold" Margin="0,0,0,10" Grid.Column="0"/>
-							<Button Content="+" Grid.Column="0" HorizontalAlignment="Right" Command="{Binding AddMemoCommand}"/>		
+							<Button Content="+" Grid.Column="0" HorizontalAlignment="Right" Command="{Binding AddMemoCommand}"/>
+							<Button Content="-" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,50,0" Command="{Binding DeleteMemoCommand}}"/>
 						</Grid>
 						
 						<ListBox ItemsSource="{Binding MemoCollection.Memos}" Grid.Row="1" SelectedItem="{Binding SelectedMemo}">
