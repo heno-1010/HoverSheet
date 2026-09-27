@@ -13,7 +13,7 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-	<Grid>
+	<Grid Name="MainGrid" Background="Transparent">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*" />   
 			<ColumnDefinition Width="Auto" />
@@ -21,7 +21,7 @@
 	
 		<TextBox Text="{Binding MemoContent, Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AcceptsReturn="True" Grid.Column="0" TextWrapping="Wrap" FontSize="14"/>
 		
-		<Border Width="250" HorizontalAlignment="Right" Background="#252525" IsVisible="{Binding IsPanelOpen}" PointerExited="PanelExited">
+		<!--<Border Width="250" HorizontalAlignment="Right" Background="#252525" IsVisible="{Binding IsPanelOpen}" PointerExited="PanelExited">
 			<ScrollViewer>
 				<StackPanel Margin="20">
 					<Grid>
@@ -48,6 +48,35 @@
 			</ScrollViewer>
 		</Border>
 	
-		<Border Width="80" HorizontalAlignment="Right" Background="#252525" IsVisible="{Binding !IsPanelOpen}" PointerEntered="BarEntered" Grid.Column="1"/>
+		<Border Width="80" HorizontalAlignment="Right" Background="#252525" IsVisible="{Binding !IsPanelOpen}" PointerEntered="BarEntered" Grid.Column="1"/>-->
+
+		<Grid Name="OverlayScreen" Background="Gray" IsVisible="False" HorizontalAlignment="Right">
+			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+				<ScrollViewer>
+					<StackPanel Margin="20">
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="*" />
+							</Grid.RowDefinitions>
+
+							<Grid Grid.Row="0">
+								<TextBlock Text="HoverSheet" FontSize="20" FontWeight="Bold" Margin="0,0,0,10" Grid.Column="0"/>
+								<Button Content="+" Grid.Column="0" HorizontalAlignment="Right" Command="{Binding AddMemoCommand}"/>
+								<Button Content="-" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,50,0" Command="{Binding DeleteMemoCommand}}"/>
+							</Grid>
+
+							<ListBox ItemsSource="{Binding MemoCollection.Memos}" Grid.Row="1" SelectedItem="{Binding SelectedMemo}">
+								<ListBox.ItemTemplate>
+									<DataTemplate>
+										<TextBlock Text="{Binding Content}" FontSize="14" Margin="0,0,0,5"/>
+									</DataTemplate>
+								</ListBox.ItemTemplate>
+							</ListBox>
+						</Grid>
+					</StackPanel>
+				</ScrollViewer>
+			</StackPanel>
+		</Grid>
 	</Grid>
 </Window>

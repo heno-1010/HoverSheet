@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 
 namespace HoverSheet.Views
 {
@@ -8,6 +9,11 @@ namespace HoverSheet.Views
         public MainWindow()
         {
             InitializeComponent();
+
+            MainGrid.AddHandler(
+                PointerPressedEvent,
+                OnPointerPressed,
+                Avalonia.Interactivity.RoutingStrategies.Tunnel);
         }
         private void BarEntered(object? sender, PointerEventArgs e)
         {
@@ -25,5 +31,16 @@ namespace HoverSheet.Views
             }
         }
 
+        private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
+        {
+            var properties = e.GetCurrentPoint(MainGrid).Properties;
+
+            if (properties.IsMiddleButtonPressed)
+            {
+                System.Diagnostics.Debug.WriteLine("中クリック");
+                OverlayScreen.IsVisible = !OverlayScreen.IsVisible;
+                e.Handled = true;
+            }
+        }
     }
 }
