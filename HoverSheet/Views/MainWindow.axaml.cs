@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using HoverSheet.ViewModels;
 
 namespace HoverSheet.Views
 {
@@ -41,6 +42,29 @@ namespace HoverSheet.Views
                 OverlayScreen.IsVisible = !OverlayScreen.IsVisible;
                 e.Handled = true;
             }
+        }
+        private void MainGrid_PointerWheelChanged(object? sender, PointerWheelEventArgs e)
+        {
+            if (!OverlayScreen.IsVisible)
+                return;
+
+            System.Diagnostics.Debug.WriteLine($"ホイール回転量: {e.Delta.Y}");
+
+            if(DataContext is MainWindowViewModel viewModel)
+            {
+                if (e.Delta.Y > 0)
+                {
+                    System.Diagnostics.Debug.WriteLine("ホイール上回転");
+                    viewModel.SelectPreviousMemo();
+                }
+                else if (e.Delta.Y < 0)
+                {
+                    System.Diagnostics.Debug.WriteLine("ホイール下回転");
+                    viewModel.SelectNextMemo();
+                }
+            }
+
+            e.Handled = true;
         }
     }
 }

@@ -87,5 +87,23 @@ namespace HoverSheet.ViewModels
                 MemoCollection.RemoveMemo(_selectedMemo.Id);
             }
         }
+        public void SelectPreviousMemo()
+        {
+            int selectedIndex = MemoCollection.Memos.IndexOf(_selectedMemo);
+            int nextIndex = selectedIndex - 1;
+            if(nextIndex >= 0)
+            {
+                SelectedMemo = MemoCollection.Memos[nextIndex];
+            }
+        }
+        public void SelectNextMemo()
+        {
+            int selectedIndex = MemoCollection.Memos.IndexOf(_selectedMemo);
+            int nextIndex = selectedIndex + 1;
+            if(nextIndex < MemoCollection.Memos.Count)
+            {
+                SelectedMemo = MemoCollection.Memos[nextIndex];
+            }
+        }
     }
 }
