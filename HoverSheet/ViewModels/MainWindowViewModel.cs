@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia.Interactivity;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using HoverSheet.Models;
 using System;
@@ -15,7 +16,7 @@ namespace HoverSheet.ViewModels
         public MemoCollection MemoCollection { get; } = new();
         public ICommand AddMemoCommand { get; }
         public ICommand DeleteMemoCommand { get; }
-        public ICommand OpenSettingsCommand { get; }
+        public event Action? SettingsRequested;
 
         private Memo? _selectedMemo;
         public Memo? SelectedMemo
@@ -39,7 +40,6 @@ namespace HoverSheet.ViewModels
         {
             AddMemoCommand = new RelayCommand(AddMemo);
             DeleteMemoCommand = new RelayCommand(DeleteMemo);
-            OpenSettingsCommand = new RelayCommand(OpenSeettings);
             LoadMemos();
         }
         private void AddMemo()
@@ -108,9 +108,5 @@ namespace HoverSheet.ViewModels
             }
         }
 
-        public void OpenSeettings()
-        {
-            // 設定画面を開く処理をここに追加
-        }
     }
 }

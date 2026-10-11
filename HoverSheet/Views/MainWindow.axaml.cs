@@ -11,6 +11,7 @@ namespace HoverSheet.Views
         {
             InitializeComponent();
 
+
             MainGrid.AddHandler(
                 PointerPressedEvent,
                 OnPointerPressed,
@@ -65,6 +66,11 @@ namespace HoverSheet.Views
             }
 
             e.Handled = true;
+        }
+        private void SettingsButton_Click(object? sender, RoutedEventArgs e)
+        {
+            var settingsWindow = new SettingsWindow();
+            settingsWindow.Show();
         }
     }
 }
